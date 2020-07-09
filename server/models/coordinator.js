@@ -5,6 +5,7 @@ const coordinatorSchema = new Schema({
   rollNumber: String,
   contact: Number,
   email: String,
+  designation: String,
 });
 
 module.exports = mongoose.model("coordinator", coordinatorSchema);
