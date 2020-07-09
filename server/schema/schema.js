@@ -1,6 +1,8 @@
 const graphql = require("graphql");
 const Mentor = require("../models/mentor");
 const Mentee = require("../models/mentee");
+const Coordinator = require("../models/coordinator");
+const Prefect = require("../models/prefect");
 
 const {
   GraphQLString,
@@ -9,6 +11,34 @@ const {
   GraphQLID,
   GraphQLList,
 } = graphql;
+
+const CoordinatorType = new GraphQLObjectType({
+  name: "Coordinator",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    contact: { type: GraphQLString },
+    email: { type: GraphQLString },
+    designation: { type: GraphQLString },
+  }),
+});
+
+const PrefectType = new GraphQLObjectType({
+  name: "Prefect",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    contact: { type: GraphQLString },
+    email: { type: GraphQLString },
+    coordinator: { type: GraphQLID },
+    coordinatorDetails: {
+      type: CoordinatorType,
+      resolve(parent, args) {
+        return Coordinator.findById(parent.coordinator);
+      },
+    },
+  }),
+});
 
 const MentorType = new GraphQLObjectType({
   name: "Mentor",
@@ -67,6 +97,18 @@ const RootQuery = new GraphQLObjectType({
           }
         );
         return result;
+      },
+    },
+    prefects: {
+      type: new GraphQLList(PrefectType),
+      resolve(parent, args) {
+        return Prefect.find({});
+      },
+    },
+    coordinators: {
+      type: new GraphQLList(CoordinatorType),
+      resolve(parent, args) {
+        return Coordinator.find({});
       },
     },
   },
