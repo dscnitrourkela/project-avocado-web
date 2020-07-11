@@ -4,6 +4,10 @@
   "description": "Server for project-avocado web client",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
+    "server": "nodemon app.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,6 +19,7 @@
   "author": "dsmarak17@gmail.com",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
@@ -22,6 +27,7 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^15.2.0",
-    "mongoose": "^5.9.21"
+    "mongoose": "^5.9.21",
+    "path": "^0.12.7"
   }
 }

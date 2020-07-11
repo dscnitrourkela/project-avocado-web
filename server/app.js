@@ -2,6 +2,7 @@ const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const schema = require("./schema/schema");
 const mongoose = require("mongoose");
+const path = require("path");
 
 require("dotenv").config();
 
@@ -19,6 +20,11 @@ mongoose.connect(process.env.mongourl, {
 //confirm connection to database
 mongoose.connection.once("open", () => {
   console.log("Connected to ics database");
+});
+
+//react client endpoint
+app.use("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
 //graphql endpoint
