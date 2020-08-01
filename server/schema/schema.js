@@ -1,8 +1,8 @@
-const graphql = require("graphql");
-const Mentor = require("../models/mentor");
-const Mentee = require("../models/mentee");
-const Coordinator = require("../models/coordinator");
-const Prefect = require("../models/prefect");
+const graphql = require('graphql');
+const Mentor = require('../models/mentor');
+const Mentee = require('../models/mentee');
+const Coordinator = require('../models/coordinator');
+const Prefect = require('../models/prefect');
 
 const {
   GraphQLString,
@@ -10,10 +10,12 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLList,
+  GraphQLNonNull,
+  GraphQLInt,
 } = graphql;
 
 const CoordinatorType = new GraphQLObjectType({
-  name: "Coordinator",
+  name: 'Coordinator',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -24,7 +26,7 @@ const CoordinatorType = new GraphQLObjectType({
 });
 
 const PrefectType = new GraphQLObjectType({
-  name: "Prefect",
+  name: 'Prefect',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -41,7 +43,7 @@ const PrefectType = new GraphQLObjectType({
 });
 
 const MentorType = new GraphQLObjectType({
-  name: "Mentor",
+  name: 'Mentor',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -58,7 +60,7 @@ const MentorType = new GraphQLObjectType({
 });
 
 const MenteeType = new GraphQLObjectType({
-  name: "Mentee",
+  name: 'Mentee',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -73,7 +75,7 @@ const MenteeType = new GraphQLObjectType({
 });
 
 const RootQuery = new GraphQLObjectType({
-  name: "RootQueryType",
+  name: 'RootQueryType',
   fields: {
     mentee: {
       type: MenteeType,
@@ -114,6 +116,38 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutations',
+  fields: {
+    addMentee: {
+      type: MenteeType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: new GraphQLNonNull(GraphQLInt) },
+        mentor: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { name, rollNumber, mentor }) {
+        const mentee = new Mentee({
+          name,
+          rollNumber,
+          email,
+          contact,
+          mentor,
+        });
+
+        try {
+          await mentee.save();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+  },
+});
+
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation,
 });
