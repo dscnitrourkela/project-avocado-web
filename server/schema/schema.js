@@ -140,7 +140,8 @@ const mutation = new GraphQLObjectType({
         });
 
         try {
-          await mentee.save();
+          const new_mentee = await mentee.save();
+          return new_mentee;
         } catch (error) {
           console.log(error);
         }
@@ -170,7 +171,8 @@ const mutation = new GraphQLObjectType({
         );
 
         try {
-          await mentee.save();
+          const updated_mentee = await mentee.save();
+          return updated_mentee;
         } catch (error) {
           console.log(error);
         }
@@ -182,13 +184,18 @@ const mutation = new GraphQLObjectType({
         rollnumber: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { rollNumber }) {
-        await Mentee.findOneAndDelete({ rollNumber }, (error, docs) => {
-          if (err) {
-            console.log(error);
-          } else {
-            console.log('Deleted User : ', docs);
+        const deleted_mentee = await Mentee.findOneAndDelete(
+          { rollNumber },
+          (error, docs) => {
+            if (err) {
+              console.log(error);
+            } else {
+              console.log('Deleted User : ', docs);
+            }
           }
-        });
+        );
+
+        return deleted_mentee;
       },
     },
   },
