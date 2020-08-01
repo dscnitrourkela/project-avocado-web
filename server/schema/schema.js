@@ -4,6 +4,7 @@ const Mentee = require('../models/mentee');
 const Coordinator = require('../models/coordinator');
 const Prefect = require('../models/prefect');
 const { resolve } = require('path');
+const { findOneAndDelete } = require('../models/mentor');
 
 const {
   GraphQLString,
@@ -173,6 +174,21 @@ const mutation = new GraphQLObjectType({
         } catch (error) {
           console.log(error);
         }
+      },
+    },
+    removeMentee: {
+      type: MenteeType,
+      args: {
+        rollnumber: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { rollNumber }) {
+        await Mentee.findOneAndDelete({ rollNumber }, (error, docs) => {
+          if (err) {
+            console.log(error);
+          } else {
+            console.log('Deleted User : ', docs);
+          }
+        });
       },
     },
   },
