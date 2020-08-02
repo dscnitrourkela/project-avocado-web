@@ -39,12 +39,6 @@ app.use(
   })
 );
 
-app.get('/trial', async (req, res) => {
-  const data = await Mentor.findOne({ rollNumber: '416PH5047' });
-
-  res.send(data);
-});
-
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

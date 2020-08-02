@@ -54,7 +54,7 @@ const MentorType = new GraphQLObjectType({
     prefect: { type: GraphQLID },
     mentees: {
       type: new GraphQLList(MenteeType),
-      async resolve(parent, args) {
+      resolve(parent, args) {
         return Mentee.find({ mentor: parent.id });
       },
     },
@@ -142,8 +142,7 @@ const mutation = new GraphQLObjectType({
         });
 
         try {
-          const new_mentee = await mentee.save();
-          return new_mentee;
+          return await mentee.save();
         } catch (error) {
           console.log(error);
         }
@@ -173,8 +172,7 @@ const mutation = new GraphQLObjectType({
         );
 
         try {
-          const updated_mentee = await mentee.save();
-          return updated_mentee;
+          return await mentee.save();
         } catch (error) {
           console.log(error);
         }
@@ -186,16 +184,13 @@ const mutation = new GraphQLObjectType({
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { rollNumber }) {
-        const deleted_mentee = await Mentee.findOneAndDelete(
-          { rollNumber },
-          (error, docs) => {
-            if (error) {
-              console.log(error);
-            }
-
-            return docs;
+        await Mentee.findOneAndDelete({ rollNumber }, (error, docs) => {
+          if (error) {
+            console.log(error);
           }
-        );
+
+          return docs;
+        });
       },
     },
     addMentor: {
@@ -222,8 +217,7 @@ const mutation = new GraphQLObjectType({
         });
 
         try {
-          const new_mentor = await mentor.save();
-          return new_mentor;
+          return await mentor.save();
         } catch (error) {
           console.log(error);
         }
@@ -258,8 +252,7 @@ const mutation = new GraphQLObjectType({
         );
 
         try {
-          const updated_mentor = await mentor.save();
-          return updated_mentor;
+          return await mentor.save();
         } catch (error) {
           console.log(error);
         }
@@ -271,16 +264,13 @@ const mutation = new GraphQLObjectType({
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { rollNumber }) {
-        const deleted_mentor = await Mentor.findOneAndDelete(
-          { rollNumber },
-          (error, docs) => {
-            if (error) {
-              console.log(error);
-            }
-
-            return docs;
+        await Mentor.findOneAndDelete({ rollNumber }, (error, docs) => {
+          if (error) {
+            console.log(error);
           }
-        );
+
+          return docs;
+        });
       },
     },
   },
