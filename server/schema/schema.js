@@ -237,7 +237,7 @@ const mutation = new GraphQLObjectType({
         parents,
         { name, rollNumber, contact, email, prefect, coordinator }
       ) {
-        const mentor = await mentor.findOneAndUpdate(
+        const mentor = await Mentor.findOneAndUpdate(
           { rollNumber },
           {
             $set: {
@@ -265,6 +265,79 @@ const mutation = new GraphQLObjectType({
       },
       async resolve(parent, { rollNumber }) {
         await Mentor.findOneAndDelete({ rollNumber }, (error, docs) => {
+          if (error) {
+            console.log(error);
+          }
+
+          return docs;
+        });
+      },
+    },
+    addCoordinator: {
+      type: CoordinatorType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: new GraphQLNonNull(GraphQLInt) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        designation: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { name, rollNumber, contact, email, designation }) {
+        const coordinator = new Coordinator({
+          name,
+          rollNumber,
+          contact,
+          email,
+          designation,
+        });
+
+        try {
+          return await coordinator.save();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+    editCoordinator: {
+      type: CoordinatorType,
+      args: {
+        name: { type: GraphQLString },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: GraphQLInt },
+        email: { type: GraphQLString },
+        designation: { type: GraphQLString },
+      },
+      async resolve(
+        parents,
+        { name, rollNumber, contact, email, designation }
+      ) {
+        const coordinator = await Coordinator.findOneAndUpdate(
+          { rollNumber },
+          {
+            $set: {
+              name,
+              mentor,
+              contact,
+              email,
+              designation,
+            },
+          }
+        );
+
+        try {
+          return await coordinator.save();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+    removeCoordinator: {
+      type: MentorType,
+      args: {
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { rollNumber }) {
+        await Coordinator.findOneAndDelete({ rollNumber }, (error, docs) => {
           if (error) {
             console.log(error);
           }
