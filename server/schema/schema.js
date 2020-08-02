@@ -3,8 +3,6 @@ const Mentor = require('../models/mentor');
 const Mentee = require('../models/mentee');
 const Coordinator = require('../models/coordinator');
 const Prefect = require('../models/prefect');
-const { resolve } = require('path');
-const { findOneAndDelete } = require('../models/mentor');
 
 const {
   GraphQLString,
@@ -49,6 +47,7 @@ const MentorType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
+    rollNumber: { type: GraphQLString },
     contact: { type: GraphQLString },
     email: { type: GraphQLString },
     prefect: { type: GraphQLID },
@@ -67,6 +66,8 @@ const MenteeType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
+    contact: { type: GraphQLString },
+    email: { type: GraphQLString },
     mentor: {
       type: MentorType,
       resolve(parent, args) {
@@ -126,17 +127,17 @@ const mutation = new GraphQLObjectType({
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: new GraphQLNonNull(GraphQLString) },
+        mentor: { type: new GraphQLNonNull(GraphQLID) },
         contact: { type: new GraphQLNonNull(GraphQLInt) },
-        mentor: { type: new GraphQLNonNull(GraphQLString) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { name, rollNumber, mentor }) {
+      async resolve(parent, { name, rollNumber, mentor, contact, email }) {
         const mentee = new Mentee({
           name,
           rollNumber,
-          email,
-          contact,
           mentor,
+          contact,
+          email,
         });
 
         try {
@@ -151,21 +152,21 @@ const mutation = new GraphQLObjectType({
       type: MenteeType,
       args: {
         name: { type: GraphQLString },
-        rollnumber: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: GraphQLString },
-        contact: { type: GraphQLInt },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         mentor: { type: GraphQLString },
+        contact: { type: GraphQLString },
+        email: { type: GraphQLString },
       },
 
-      async resolve(parent, { name, rollNumber, email, contact, mentor }) {
+      async resolve(parent, { name, rollNumber, mentor, contact, email }) {
         const mentee = await Mentee.findOneAndUpdate(
           { rollNumber },
           {
             $set: {
               name,
-              email,
-              contact,
               mentor,
+              contact,
+              email,
             },
           }
         );
@@ -181,21 +182,19 @@ const mutation = new GraphQLObjectType({
     removeMentee: {
       type: MenteeType,
       args: {
-        rollnumber: { type: new GraphQLNonNull(GraphQLString) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { rollNumber }) {
         const deleted_mentee = await Mentee.findOneAndDelete(
           { rollNumber },
           (error, docs) => {
-            if (err) {
+            if (error) {
               console.log(error);
-            } else {
-              console.log('Deleted User : ', docs);
             }
+
+            return docs;
           }
         );
-
-        return deleted_mentee;
       },
     },
   },

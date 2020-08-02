@@ -22,6 +22,9 @@ mongoose.connection.once('open', () => {
   console.log('Connected to ics database');
 });
 
+const Mentor = require('./models/mentor');
+
+app.use(express.json());
 //react client endpoint
 // app.use("/", (req, res) => {
 //   res.sendFile(path.join(__dirname, "/client/build/index.html"));
@@ -35,6 +38,12 @@ app.use(
     graphiql: true,
   })
 );
+
+app.get('/trial', async (req, res) => {
+  const data = await Mentor.findOne({ rollNumber: '416PH5047' });
+
+  res.send(data);
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
