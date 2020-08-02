@@ -230,6 +230,42 @@ const mutation = new GraphQLObjectType({
       },
     },
   },
+  editMentor: {
+    type: MentorType,
+    args: {
+      name: { type: GraphQLString },
+      rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+      contact: { type: GraphQLInt },
+      email: { type: GraphQLString },
+      prefect: { type: GraphQLString },
+      coordinator: { type: GraphQLString },
+    },
+    async resolve(
+      parents,
+      { name, rollNumber, contact, email, prefect, coordinator }
+    ) {
+      const mentor = await mentor.findOneAndUpdate(
+        { rollNumber },
+        {
+          $set: {
+            name,
+            mentor,
+            contact,
+            email,
+            prefect,
+            coordinator,
+          },
+        }
+      );
+
+      try {
+        const updated_mentor = await mentor.save();
+        return updated_mentor;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 });
 
 module.exports = new GraphQLSchema({
