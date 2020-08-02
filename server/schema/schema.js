@@ -3,6 +3,7 @@ const Mentor = require('../models/mentor');
 const Mentee = require('../models/mentee');
 const Coordinator = require('../models/coordinator');
 const Prefect = require('../models/prefect');
+const { resolve } = require('path');
 
 const {
   GraphQLString,
@@ -195,6 +196,37 @@ const mutation = new GraphQLObjectType({
             return docs;
           }
         );
+      },
+    },
+    addMentor: {
+      type: MentorType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: new GraphQLNonNull(GraphQLInt) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        prefect: { type: new GraphQLNonNull(GraphQLString) },
+        coordinator: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(
+        parent,
+        { name, rollNumber, contact, email, prefect, coordinator }
+      ) {
+        const mentor = new Mentor({
+          name,
+          rollNumber,
+          contact,
+          email,
+          prefect,
+          coordinator,
+        });
+
+        try {
+          const new_mentor = await mentor.save();
+          return new_mentor;
+        } catch (error) {
+          console.log(error);
+        }
       },
     },
   },
