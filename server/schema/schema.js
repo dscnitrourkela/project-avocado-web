@@ -332,12 +332,85 @@ const mutation = new GraphQLObjectType({
       },
     },
     removeCoordinator: {
-      type: MentorType,
+      type: CoordinatorType,
       args: {
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { rollNumber }) {
         await Coordinator.findOneAndDelete({ rollNumber }, (error, docs) => {
+          if (error) {
+            console.log(error);
+          }
+
+          return docs;
+        });
+      },
+    },
+    addPrefect: {
+      type: PrefectType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: new GraphQLNonNull(GraphQLInt) },
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        coordinator: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { name, rollNumber, contact, email, coordinator }) {
+        const prefect = new Prefect({
+          name,
+          rollNumber,
+          contact,
+          email,
+          coordinator,
+        });
+
+        try {
+          return await prefect.save();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+    editPrefect: {
+      type: PrefectType,
+      args: {
+        name: { type: GraphQLString },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: GraphQLInt },
+        email: { type: GraphQLString },
+        coordinator: { type: GraphQLString },
+      },
+      async resolve(
+        parents,
+        { name, rollNumber, contact, email, coordinator }
+      ) {
+        const prefect = await Prefect.findOneAndUpdate(
+          { rollNumber },
+          {
+            $set: {
+              name,
+              mentor,
+              contact,
+              email,
+              coordinator,
+            },
+          }
+        );
+
+        try {
+          return await prefect.save();
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+    removePrefect: {
+      type: PrefectType,
+      args: {
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { rollNumber }) {
+        await Prefect.findOneAndDelete({ rollNumber }, (error, docs) => {
           if (error) {
             console.log(error);
           }
