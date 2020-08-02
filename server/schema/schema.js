@@ -54,7 +54,7 @@ const MentorType = new GraphQLObjectType({
     prefect: { type: GraphQLID },
     mentees: {
       type: new GraphQLList(MenteeType),
-      resolve(parent, args) {
+      async resolve(parent, args) {
         return Mentee.find({ mentor: parent.id });
       },
     },
@@ -229,41 +229,59 @@ const mutation = new GraphQLObjectType({
         }
       },
     },
-  },
-  editMentor: {
-    type: MentorType,
-    args: {
-      name: { type: GraphQLString },
-      rollNumber: { type: new GraphQLNonNull(GraphQLString) },
-      contact: { type: GraphQLInt },
-      email: { type: GraphQLString },
-      prefect: { type: GraphQLString },
-      coordinator: { type: GraphQLString },
-    },
-    async resolve(
-      parents,
-      { name, rollNumber, contact, email, prefect, coordinator }
-    ) {
-      const mentor = await mentor.findOneAndUpdate(
-        { rollNumber },
-        {
-          $set: {
-            name,
-            mentor,
-            contact,
-            email,
-            prefect,
-            coordinator,
-          },
-        }
-      );
+    editMentor: {
+      type: MentorType,
+      args: {
+        name: { type: GraphQLString },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        contact: { type: GraphQLInt },
+        email: { type: GraphQLString },
+        prefect: { type: GraphQLString },
+        coordinator: { type: GraphQLString },
+      },
+      async resolve(
+        parents,
+        { name, rollNumber, contact, email, prefect, coordinator }
+      ) {
+        const mentor = await mentor.findOneAndUpdate(
+          { rollNumber },
+          {
+            $set: {
+              name,
+              mentor,
+              contact,
+              email,
+              prefect,
+              coordinator,
+            },
+          }
+        );
 
-      try {
-        const updated_mentor = await mentor.save();
-        return updated_mentor;
-      } catch (error) {
-        console.log(error);
-      }
+        try {
+          const updated_mentor = await mentor.save();
+          return updated_mentor;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+    removeMentor: {
+      type: MentorType,
+      args: {
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      async resolve(parent, { rollNumber }) {
+        const deleted_mentor = await Mentor.findOneAndDelete(
+          { rollNumber },
+          (error, docs) => {
+            if (error) {
+              console.log(error);
+            }
+
+            return docs;
+          }
+        );
+      },
     },
   },
 });
