@@ -277,15 +277,13 @@ const mutation = new GraphQLObjectType({
       type: CoordinatorType,
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
-        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: new GraphQLNonNull(GraphQLInt) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         designation: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { name, rollNumber, contact, email, designation }) {
+      async resolve(parent, { name, contact, email, designation }) {
         const coordinator = new Coordinator({
           name,
-          rollNumber,
           contact,
           email,
           designation,
@@ -302,27 +300,20 @@ const mutation = new GraphQLObjectType({
       type: CoordinatorType,
       args: {
         name: { type: GraphQLString },
-        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        id: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: GraphQLInt },
         email: { type: GraphQLString },
         designation: { type: GraphQLString },
       },
-      async resolve(
-        parents,
-        { name, rollNumber, contact, email, designation }
-      ) {
-        const coordinator = await Coordinator.findOneAndUpdate(
-          { rollNumber },
-          {
-            $set: {
-              name,
-              mentor,
-              contact,
-              email,
-              designation,
-            },
-          }
-        );
+      async resolve(parent, { name, contact, email, designation, id }) {
+        const coordinator = await Coordinator.findByIdAndUpdate(id, {
+          $set: {
+            name,
+            contact,
+            email,
+            designation,
+          },
+        });
 
         try {
           return await coordinator.save();
@@ -334,10 +325,10 @@ const mutation = new GraphQLObjectType({
     removeCoordinator: {
       type: CoordinatorType,
       args: {
-        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        id: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { rollNumber }) {
-        await Coordinator.findOneAndDelete({ rollNumber }, (error, docs) => {
+      async resolve(parent, { id }) {
+        await Coordinator.findByIdAndDelete(id, (error, docs) => {
           if (error) {
             console.log(error);
           }
@@ -350,15 +341,13 @@ const mutation = new GraphQLObjectType({
       type: PrefectType,
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
-        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: new GraphQLNonNull(GraphQLInt) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         coordinator: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { name, rollNumber, contact, email, coordinator }) {
+      async resolve(parent, { name, contact, email, coordinator }) {
         const prefect = new Prefect({
           name,
-          rollNumber,
           contact,
           email,
           coordinator,
@@ -375,27 +364,20 @@ const mutation = new GraphQLObjectType({
       type: PrefectType,
       args: {
         name: { type: GraphQLString },
-        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: GraphQLInt },
         email: { type: GraphQLString },
         coordinator: { type: GraphQLString },
+        id: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(
-        parents,
-        { name, rollNumber, contact, email, coordinator }
-      ) {
-        const prefect = await Prefect.findOneAndUpdate(
-          { rollNumber },
-          {
-            $set: {
-              name,
-              mentor,
-              contact,
-              email,
-              coordinator,
-            },
-          }
-        );
+      async resolve(parent, { name, contact, email, coordinator, id }) {
+        const prefect = await Prefect.findByIdAndUpdate(id, {
+          $set: {
+            name,
+            contact,
+            email,
+            coordinator,
+          },
+        });
 
         try {
           return await prefect.save();
@@ -407,10 +389,10 @@ const mutation = new GraphQLObjectType({
     removePrefect: {
       type: PrefectType,
       args: {
-        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+        id: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { rollNumber }) {
-        await Prefect.findOneAndDelete({ rollNumber }, (error, docs) => {
+      async resolve(parent, { id }) {
+        await Prefect.findByIdAndDelete(id, (error, docs) => {
           if (error) {
             console.log(error);
           }
