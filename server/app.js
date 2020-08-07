@@ -1,10 +1,10 @@
-const express = require("express");
-const graphqlHTTP = require("express-graphql");
-const schema = require("./schema/schema");
-const mongoose = require("mongoose");
-const path = require("path");
+const express = require('express');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./schema/schema');
+const mongoose = require('mongoose');
+const path = require('path');
 
-require("dotenv").config();
+require('dotenv').config();
 
 const app = express();
 
@@ -18,18 +18,21 @@ mongoose.connect(process.env.mongourl, {
 });
 
 //confirm connection to database
-mongoose.connection.once("open", () => {
-  console.log("Connected to ics database");
+mongoose.connection.once('open', () => {
+  console.log('Connected to ics database');
 });
 
+const Mentor = require('./models/mentor');
+
+app.use(express.json());
 //react client endpoint
-app.use("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
-});
+// app.use("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "/client/build/index.html"));
+// });
 
 //graphql endpoint
 app.use(
-  "/graphql",
+  '/graphql',
   graphqlHTTP({
     schema: schema,
     graphiql: true,
