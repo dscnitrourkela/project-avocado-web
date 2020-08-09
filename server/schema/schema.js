@@ -52,6 +52,12 @@ const MentorType = new GraphQLObjectType({
     contact: { type: GraphQLString },
     email: { type: GraphQLString },
     prefect: { type: GraphQLID },
+    prefectDetails: {
+      type: PrefectType,
+      resolve(parent, args) {
+        return Prefect.findById(parent.prefect);
+      },
+    },
     mentees: {
       type: new GraphQLList(MenteeType),
       resolve(parent, args) {
