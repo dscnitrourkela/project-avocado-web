@@ -24,6 +24,16 @@
         "code",
         "maintenance"
       ]
+    },
+    {
+      "login": "Thesmader",
+      "name": "Smarak Das",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/34758667?v=4",
+      "profile": "https://github.com/Thesmader",
+      "contributions": [
+        "code",
+        "projectManagement"
+      ]
     }
   ],
   "contributorsPerLine": 7,
