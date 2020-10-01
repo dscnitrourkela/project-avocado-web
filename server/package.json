@@ -1,10 +1,10 @@
 {
   "name": "project-avocado-server",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "Server for project-avocado web client",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "server": "nodemon app.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
@@ -23,6 +23,7 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
