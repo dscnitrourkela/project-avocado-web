@@ -1,6 +1,6 @@
 [![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -56,6 +56,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://designrknight-website.web.app/"><img src="https://avatars0.githubusercontent.com/u/27865704?v=4" width="100px;" alt=""/><br /><sub><b>Abel Mathew</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=DesignrKnight" title="Code">💻</a> <a href="#projectManagement-DesignrKnight" title="Project Management">📆</a></td>
     <td align="center"><a href="https://github.com/riteshsp2000"><img src="https://avatars3.githubusercontent.com/u/56112399?v=4" width="100px;" alt=""/><br /><sub><b>Ritesh Patil</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=riteshsp2000" title="Code">💻</a> <a href="#maintenance-riteshsp2000" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/Thesmader"><img src="https://avatars2.githubusercontent.com/u/34758667?v=4" width="100px;" alt=""/><br /><sub><b>Smarak Das</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=Thesmader" title="Code">💻</a> <a href="#projectManagement-Thesmader" title="Project Management">📆</a></td>
+    <td align="center"><a href="https://allcontributors.org"><img src="https://avatars1.githubusercontent.com/u/46410174?v=4" width="100px;" alt=""/><br /><sub><b>All Contributors</b></sub></a><br /><a href="#tool-all-contributors" title="Tools">🔧</a></td>
   </tr>
 </table>
 
