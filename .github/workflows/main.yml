@@ -15,5 +15,5 @@ jobs:
       id: hello
       uses: DesignrKnight/js-package-info@master
       with:
-        node_dir: './server/'
+        node_dir: './server'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
