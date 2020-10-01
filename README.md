@@ -6,7 +6,11 @@
 
 # About App
 - The project repository of the for the admin panel of mobile app for Institute Counselling Services, NIT Rourkela.
-
+#### API
+https://project-avocado-8b3e1.uc.r.appspot.com/graphql
+The write operations are temporariliy banned on a server level as API is not auth protected.
+#### Dashboard
+http://project-avocado.herokuapp.com/
 
 ## Contributing 🎃
 ------------
