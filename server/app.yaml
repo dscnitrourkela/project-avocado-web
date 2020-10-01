@@ -12,6 +12,6 @@ resources:
   disk_size_gb: 5
 
 #Read Only User
-  env_variables:
+env_variables:
   mongourl: "mongodb+srv://demouser:gOoTz78PWMlAOpGv@mentors.wdpe9.gcp.mongodb.net/ics?retryWrites=true&w=majority"
 
