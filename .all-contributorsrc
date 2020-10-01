@@ -14,6 +14,16 @@
         "code",
         "projectManagement"
       ]
+    },
+    {
+      "login": "riteshsp2000",
+      "name": "Ritesh Patil",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/56112399?v=4",
+      "profile": "https://github.com/riteshsp2000",
+      "contributions": [
+        "code",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
