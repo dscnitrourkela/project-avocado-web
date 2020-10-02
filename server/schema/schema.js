@@ -20,7 +20,8 @@ const CoordinatorType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    contact: { type: GraphQLString },
+    contact: { type: GraphQLInt },
+    rollNumber: { type: GraphQLString },
     email: { type: GraphQLString },
     designation: { type: GraphQLString },
   }),
@@ -31,8 +32,9 @@ const PrefectType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    contact: { type: GraphQLString },
+    contact: { type: GraphQLInt },
     email: { type: GraphQLString },
+    rollNumber: { type: GraphQLString },
     coordinator: { type: GraphQLID },
     coordinatorDetails: {
       type: CoordinatorType,
@@ -49,7 +51,7 @@ const MentorType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
-    contact: { type: GraphQLString },
+    contact: { type: GraphQLInt },
     email: { type: GraphQLString },
     prefect: { type: GraphQLID },
     prefectDetails: {
@@ -73,7 +75,7 @@ const MenteeType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
-    contact: { type: GraphQLString },
+    contact: { type: GraphQLInt },
     email: { type: GraphQLString },
     mentor: {
       type: MentorType,
@@ -97,28 +99,22 @@ const RootQuery = new GraphQLObjectType({
     mentor: {
       type: MentorType,
       args: { rollNumber: { type: GraphQLString } },
-      resolve(parent, args) {
-        var result = Mentor.findOne(
-          { rollNumber: args.rollNumber },
-          (error, document) => {
-            if (error) {
-              return {
-                error: error.toString(),
-              };
-            }
-          }
-        );
-        return result;
+      async resolve(parent, args) {
+        const response = await Mentor.findOne({ rollNumber: args.rollNumber });
+        console.log(response);
+        return Mentor.findOne({ rollNumber: args.rollNumber });
       },
     },
     prefects: {
       type: new GraphQLList(PrefectType),
+      args: {},
       resolve(parent, args) {
         return Prefect.find({});
       },
     },
     coordinators: {
       type: new GraphQLList(CoordinatorType),
+      args: {},
       resolve(parent, args) {
         return Coordinator.find({});
       },
@@ -160,7 +156,7 @@ const mutation = new GraphQLObjectType({
         name: { type: GraphQLString },
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         mentor: { type: GraphQLString },
-        contact: { type: GraphQLString },
+        contact: { type: GraphQLInt },
         email: { type: GraphQLString },
       },
 
@@ -194,7 +190,6 @@ const mutation = new GraphQLObjectType({
           if (error) {
             console.log(error);
           }
-
           return docs;
         });
       },
@@ -284,15 +279,17 @@ const mutation = new GraphQLObjectType({
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: new GraphQLNonNull(GraphQLInt) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         designation: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { name, contact, email, designation }) {
+      async resolve(parent, { name, contact, email, designation, rollNumber }) {
         const coordinator = new Coordinator({
           name,
           contact,
           email,
           designation,
+          rollNumber,
         });
 
         try {
@@ -348,15 +345,17 @@ const mutation = new GraphQLObjectType({
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: new GraphQLNonNull(GraphQLInt) },
+        rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         coordinator: { type: new GraphQLNonNull(GraphQLString) },
       },
-      async resolve(parent, { name, contact, email, coordinator }) {
+      async resolve(parent, { name, contact, email, coordinator, rollNumber }) {
         const prefect = new Prefect({
           name,
           contact,
           email,
           coordinator,
+          rollNumber,
         });
 
         try {

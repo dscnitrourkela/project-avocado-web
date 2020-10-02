@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mentorSchema = new Schema({
   name: String,
@@ -6,7 +6,6 @@ const mentorSchema = new Schema({
   contact: Number,
   email: String,
   prefect: String,
-  coordinator: String,
 });
 
-module.exports = mongoose.model("mentors", mentorSchema);
+module.exports = mongoose.model('mentors', mentorSchema);

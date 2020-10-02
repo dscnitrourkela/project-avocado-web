@@ -12,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 //connect to mongodb database
+
 mongoose.connect(process.env.mongourl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -25,10 +26,6 @@ mongoose.connection.once('open', () => {
 const Mentor = require('./models/mentor');
 
 app.use(express.json());
-//react client endpoint
-// app.use("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "/client/build/index.html"));
-// });
 
 //graphql endpoint
 app.use(
@@ -38,6 +35,11 @@ app.use(
     graphiql: true,
   })
 );
+
+app.get('/test', async (req, res) => {
+  const response = await Mentor.find();
+  res.send(response);
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
