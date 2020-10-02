@@ -2,7 +2,6 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose');
-const path = require('path');
 
 require('dotenv').config();
 
@@ -35,11 +34,6 @@ app.use(
     graphiql: true,
   })
 );
-
-app.get('/test', async (req, res) => {
-  const response = await Mentor.find();
-  res.send(response);
-});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

@@ -3,7 +3,6 @@ const Mentor = require('../models/mentor');
 const Mentee = require('../models/mentee');
 const Coordinator = require('../models/coordinator');
 const Prefect = require('../models/prefect');
-const { resolve } = require('path');
 
 const {
   GraphQLString,
@@ -100,8 +99,6 @@ const RootQuery = new GraphQLObjectType({
       type: MentorType,
       args: { rollNumber: { type: GraphQLString } },
       async resolve(parent, args) {
-        const response = await Mentor.findOne({ rollNumber: args.rollNumber });
-        console.log(response);
         return Mentor.findOne({ rollNumber: args.rollNumber });
       },
     },
