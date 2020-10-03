@@ -139,6 +139,15 @@ const mutation = new GraphQLObjectType({
         email: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { name, rollNumber, mentor, contact, email }) {
+
+        const checkMentee = await Mentee.exists({ rollNumber });
+        
+        if (checkMentee) {
+          throw new Error(
+            'Mentee is already exists!'
+          );
+        }
+
         const mentee = new Mentee({
           name,
           rollNumber,
@@ -213,6 +222,15 @@ const mutation = new GraphQLObjectType({
         parent,
         { name, rollNumber, contact, email, prefect, coordinator }
       ) {
+
+        const checkMentor = await Mentor.exists({ rollNumber });
+        
+        if (checkMentor) {
+          throw new Error(
+            'Mentor is already exists!'
+          );
+        }
+
         const mentor = new Mentor({
           name,
           rollNumber,
