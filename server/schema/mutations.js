@@ -1,14 +1,14 @@
-const Mentor = require('../models/mentor');
-const Mentee = require('../models/mentee');
-const Coordinator = require('../models/coordinator');
-const Prefect = require('../models/prefect');
 const {
   GraphQLString,
   GraphQLObjectType,
   GraphQLID,
   GraphQLNonNull,
   GraphQLInt,
-} = graphql;
+} = require('graphql');
+const Mentor = require('../models/mentor');
+const Mentee = require('../models/mentee');
+const Coordinator = require('../models/coordinator');
+const Prefect = require('../models/prefect');
 const {
   CoordinatorType,
   PrefectType,
