@@ -53,6 +53,15 @@
         "code",
         "projectManagement"
       ]
+    },
+    {
+      "login": "yigitcukuren",
+      "name": "Yigit Cukuren",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/42731194?v=4",
+      "profile": "http://yigit.dev",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
