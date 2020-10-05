@@ -5,10 +5,14 @@ const {
   GraphQLNonNull,
   GraphQLInt,
 } = require('graphql');
+
+// Mongoose Models
 const Mentor = require('../models/mentor');
 const Mentee = require('../models/mentee');
 const Coordinator = require('../models/coordinator');
 const Prefect = require('../models/prefect');
+
+// Type definitions
 const {
   CoordinatorType,
   PrefectType,
