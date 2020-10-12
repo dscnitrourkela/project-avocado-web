@@ -192,6 +192,7 @@ const mutation = new GraphQLObjectType({
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         designation: { type: new GraphQLNonNull(GraphQLString) },
+        prefect: { type: new GraphQLNonNull(GraphQLString) },
       },
       async resolve(parent, { name, contact, email, designation, rollNumber }) {
         const checkCoordinator = await Coordinator.exists({ rollNumber });
@@ -208,6 +209,7 @@ const mutation = new GraphQLObjectType({
           email,
           designation,
           rollNumber,
+          prefect,
         });
 
         try {
@@ -225,6 +227,7 @@ const mutation = new GraphQLObjectType({
         contact: { type: GraphQLInt },
         email: { type: GraphQLString },
         designation: { type: GraphQLString },
+        prefect: { type: GraphQLString },
       },
       async resolve(parent, { name, contact, email, designation, id }) {
         const coordinator = await Coordinator.findByIdAndUpdate(id, {
@@ -233,6 +236,7 @@ const mutation = new GraphQLObjectType({
             contact,
             email,
             designation,
+            prefect,
           },
         });
 
