@@ -21,6 +21,13 @@ const CoordinatorType = new GraphQLObjectType({
     rollNumber: { type: GraphQLString },
     email: { type: GraphQLString },
     designation: { type: GraphQLString },
+    prefect: { type: GraphQLID },
+    prefectDetails: {
+      type: PrefectType,
+      resolve(parent, args) {
+        return Prefect.findById(parent.prefect);
+      },
+    },
   }),
 });
 
