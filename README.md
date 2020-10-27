@@ -1,6 +1,6 @@
 [![Starware](https://img.shields.io/badge/Starware-⭐-black?labelColor=f9b00d)](https://github.com/zepfietje/starware)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -60,6 +60,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/HarishTeens"><img src="https://avatars3.githubusercontent.com/u/33366456?v=4" width="100px;" alt=""/><br /><sub><b>Harish</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=HarishTeens" title="Code">💻</a> <a href="#projectManagement-HarishTeens" title="Project Management">📆</a></td>
     <td align="center"><a href="http://yigit.dev"><img src="https://avatars0.githubusercontent.com/u/42731194?v=4" width="100px;" alt=""/><br /><sub><b>Yigit Cukuren</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=yigitcukuren" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/justemoilouise"><img src="https://avatars0.githubusercontent.com/u/6330131?v=4" width="100px;" alt=""/><br /><sub><b>Louise Ann Apostol</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=justemoilouise" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/JWhacheng"><img src="https://avatars3.githubusercontent.com/u/35354149?v=4" width="100px;" alt=""/><br /><sub><b>Joseph Whacheng</b></sub></a><br /><a href="https://github.com/dscnitrourkela/project-avocado-web/commits?author=JWhacheng" title="Code">💻</a></td>
   </tr>
 </table>
 
