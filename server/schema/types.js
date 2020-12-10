@@ -17,15 +17,15 @@ const CoordinatorType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
     email: { type: GraphQLString },
     designation: { type: GraphQLString },
-    prefect: { type: GraphQLID },
+    prefect: { type: GraphQLString },
     prefectDetails: {
       type: PrefectType,
       resolve(parent, args) {
-        return Prefect.findById(parent.prefect);
+        return Prefect.findOne({ rollNumber: parent.prefect });
       },
     },
   }),
@@ -36,14 +36,14 @@ const PrefectType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     email: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
-    coordinator: { type: GraphQLID },
+    coordinator: { type: GraphQLString },
     coordinatorDetails: {
       type: CoordinatorType,
       resolve(parent, args) {
-        return Coordinator.findById(parent.coordinator);
+        return Coordinator.findOne({ rollNumber: parent.coordinator });
       },
     },
   }),
@@ -55,19 +55,19 @@ const MentorType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     email: { type: GraphQLString },
-    prefect: { type: GraphQLID },
+    prefect: { type: GraphQLString },
     prefectDetails: {
       type: PrefectType,
       resolve(parent, args) {
-        return Prefect.findById(parent.prefect);
+        return Prefect.findOne({ rollNumber: parent.prefect });
       },
     },
     mentees: {
       type: new GraphQLList(MenteeType),
       resolve(parent, args) {
-        return Mentee.find({ mentor: parent.id });
+        return Mentee.find({ mentor: parent.rollNumber });
       },
     },
   }),
@@ -79,12 +79,12 @@ const MenteeType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     rollNumber: { type: GraphQLString },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     email: { type: GraphQLString },
     mentor: {
       type: MentorType,
       resolve(parent, args) {
-        return Mentor.findById(parent.mentor);
+        return Mentor.findOne({ rollNumber: parent.mentor });
       },
     },
   }),

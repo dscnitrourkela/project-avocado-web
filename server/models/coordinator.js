@@ -6,10 +6,7 @@ const coordinatorSchema = new Schema({
   contact: Number,
   email: String,
   designation: String,
-  prefect: {
-    type: Schema.Types.ObjectId,
-    ref: 'prefect',
-  },
+  prefect: String
 });
 
 module.exports = mongoose.model('coordinator', coordinatorSchema);
