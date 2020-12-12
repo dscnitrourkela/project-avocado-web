@@ -90,9 +90,19 @@ const MenteeType = new GraphQLObjectType({
   }),
 });
 
+const ImportantDocumentType = new GraphQLObjectType({
+  name: 'ImportantDocuments',
+  fields: () => ({
+    id: {type: GraphQLID},
+    title: {type: GraphQLString},
+    link: {type: GraphQLString},
+  })
+})
+
 module.exports = {
   CoordinatorType,
   PrefectType,
   MentorType,
   MenteeType,
+  ImportantDocumentType,
 };

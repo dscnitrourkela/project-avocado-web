@@ -7,11 +7,14 @@ const Mentor = require('../models/mentor');
 const Mentee = require('../models/mentee');
 const Coordinator = require('../models/coordinator');
 const Prefect = require('../models/prefect');
+const ImportantDocument = require('../models/importantDocument');
+
 const {
   CoordinatorType,
   PrefectType,
   MentorType,
   MenteeType,
+  ImportantDocumentType,
 } = require('./types');
 
 const query = new GraphQLObjectType({
@@ -45,6 +48,13 @@ const query = new GraphQLObjectType({
         return Coordinator.find({});
       },
     },
+    ImportantDocuments: {
+      type: new GraphQLList(ImportantDocumentType),
+      args: {},
+      resolve(parents, args){
+        return ImportantDocument.find({});
+      }
+    }
   },
 });
 
