@@ -95,6 +95,7 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/ics-team/coordinators') ? 'nav-link active' : 'nav-link' } to="/ics-team/coordinators">Coordinators</Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/ics-team/prefects') ? 'nav-link active' : 'nav-link' } to="/ics-team/prefects">Prefects</Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/ics-team/mentors') ? 'nav-link active' : 'nav-link' } to="/ics-team/mentors">Mentors</Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/ics-team/mentee') ? 'nav-link active' : 'nav-link' } to="/ics-team/mentee">Mentee</Link></li>
               </ul>
             </Collapse>
           </li>

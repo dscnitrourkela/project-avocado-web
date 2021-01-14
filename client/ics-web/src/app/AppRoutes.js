@@ -8,6 +8,7 @@ const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const Coordinators = lazy(() => import('./ics-team/coordinators'));
 const Prefects = lazy(() => import('./ics-team/prefects'));
 const Mentors = lazy(() => import('./ics-team/mentors'));
+const Mentee = lazy(() => import('./ics-team/mentee'));
 
 const BasicElements = lazy(() => import('./form-elements/BasicElements'));
 
@@ -37,6 +38,7 @@ class AppRoutes extends Component {
           <Route path="/ics-team/coordinators" component={ Coordinators } />
           <Route path="/ics-team/prefects" component={ Prefects } />
           <Route path="/ics-team/mentors" component={ Mentors } />
+		      <Route path="/ics-team/mentee" component={ Mentee } />
 
           <Route path="/form-Elements/basic-elements" component={ BasicElements } />
 
