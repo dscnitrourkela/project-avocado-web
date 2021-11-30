@@ -4,20 +4,20 @@ const {
   GraphQLID,
   GraphQLNonNull,
   GraphQLInt,
-} = require('graphql');
-const Mentor = require('../models/mentor');
-const Mentee = require('../models/mentee');
-const Coordinator = require('../models/coordinator');
-const Prefect = require('../models/prefect');
+} = require("graphql");
+const Mentor = require("../models/mentor");
+const Mentee = require("../models/mentee");
+const Coordinator = require("../models/coordinator");
+const Prefect = require("../models/prefect");
 const {
   CoordinatorType,
   PrefectType,
   MentorType,
   MenteeType,
-} = require('./types');
+} = require("./types");
 
 const mutation = new GraphQLObjectType({
-  name: 'Mutations',
+  name: "Mutations",
   fields: {
     addMentee: {
       type: MenteeType,
@@ -32,9 +32,7 @@ const mutation = new GraphQLObjectType({
         const checkMentee = await Mentee.exists({ rollNumber });
 
         if (checkMentee) {
-          throw new Error(
-            'Mentee is already exists!'
-          );
+          throw new Error("Mentee is already exists!");
         }
 
         const mentee = new Mentee({
@@ -113,9 +111,7 @@ const mutation = new GraphQLObjectType({
         const checkMentor = await Mentor.exists({ rollNumber });
 
         if (checkMentor) {
-          throw new Error(
-            'Mentor is already exists!'
-          );
+          throw new Error("Mentor is already exists!");
         }
 
         const mentor = new Mentor({
@@ -189,6 +185,7 @@ const mutation = new GraphQLObjectType({
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         contact: { type: new GraphQLNonNull(GraphQLInt) },
+        year: { type: GraphQLInt },
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         designation: { type: new GraphQLNonNull(GraphQLString) },
@@ -198,9 +195,7 @@ const mutation = new GraphQLObjectType({
         const checkCoordinator = await Coordinator.exists({ rollNumber });
 
         if (checkCoordinator) {
-          throw new Error(
-            'Coordinator is already exists!'
-          );
+          throw new Error("Coordinator is already exists!");
         }
 
         const coordinator = new Coordinator({
@@ -228,6 +223,7 @@ const mutation = new GraphQLObjectType({
         email: { type: GraphQLString },
         designation: { type: GraphQLString },
         prefect: { type: GraphQLString },
+        year: { type: GraphQLInt },
       },
       async resolve(parent, { name, contact, email, designation, id }) {
         const coordinator = await Coordinator.findByIdAndUpdate(id, {
@@ -270,14 +266,13 @@ const mutation = new GraphQLObjectType({
         rollNumber: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         coordinator: { type: new GraphQLNonNull(GraphQLString) },
+        year: { type: GraphQLInt },
       },
       async resolve(parent, { name, contact, email, coordinator, rollNumber }) {
         const checkPrefect = await Prefect.exists({ rollNumber });
 
         if (checkPrefect) {
-          throw new Error(
-            'Prefect is already exists!'
-          );
+          throw new Error("Prefect is already exists!");
         }
 
         const prefect = new Prefect({
@@ -303,6 +298,7 @@ const mutation = new GraphQLObjectType({
         email: { type: GraphQLString },
         coordinator: { type: GraphQLString },
         id: { type: new GraphQLNonNull(GraphQLString) },
+        year: { type: GraphQLInt },
       },
       async resolve(parent, { name, contact, email, coordinator, id }) {
         const prefect = await Prefect.findByIdAndUpdate(id, {
@@ -339,4 +335,4 @@ const mutation = new GraphQLObjectType({
   },
 });
 
-module.exports =  mutation;
+module.exports = mutation;
