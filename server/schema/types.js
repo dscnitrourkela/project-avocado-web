@@ -1,24 +1,20 @@
-const graphql = require('graphql');
-const Mentor = require('../models/mentor');
-const Mentee = require('../models/mentee');
-const Coordinator = require('../models/coordinator');
-const Prefect = require('../models/prefect');
+const graphql = require("graphql");
+const Mentor = require("../models/mentor");
+const Mentee = require("../models/mentee");
+const Coordinator = require("../models/coordinator");
+const Prefect = require("../models/prefect");
 
-const {
-  GraphQLString,
-  GraphQLObjectType,
-  GraphQLID,
-  GraphQLList,
-  GraphQLInt,
-} = graphql;
+const { GraphQLString, GraphQLObjectType, GraphQLID, GraphQLList, GraphQLInt } =
+  graphql;
 
 const CoordinatorType = new GraphQLObjectType({
-  name: 'Coordinator',
+  name: "Coordinator",
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     contact: { type: GraphQLInt },
     rollNumber: { type: GraphQLString },
+    year: { type: GraphQLInt },
     email: { type: GraphQLString },
     designation: { type: GraphQLString },
     prefect: { type: GraphQLID },
@@ -32,12 +28,13 @@ const CoordinatorType = new GraphQLObjectType({
 });
 
 const PrefectType = new GraphQLObjectType({
-  name: 'Prefect',
+  name: "Prefect",
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     contact: { type: GraphQLInt },
     email: { type: GraphQLString },
+    year: { type: GraphQLInt },
     rollNumber: { type: GraphQLString },
     coordinator: { type: GraphQLID },
     coordinatorDetails: {
@@ -50,7 +47,7 @@ const PrefectType = new GraphQLObjectType({
 });
 
 const MentorType = new GraphQLObjectType({
-  name: 'Mentor',
+  name: "Mentor",
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
@@ -74,7 +71,7 @@ const MentorType = new GraphQLObjectType({
 });
 
 const MenteeType = new GraphQLObjectType({
-  name: 'Mentee',
+  name: "Mentee",
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },

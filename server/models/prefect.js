@@ -4,6 +4,7 @@ const prefectSchema = new Schema({
   name: String,
   rollNumber: String,
   contact: Number,
+  year: Number,
   email: String,
   coordinator: String,
 });
