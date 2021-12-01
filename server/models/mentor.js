@@ -7,7 +7,10 @@ const mentorSchema = new Schema({
   contact: Number,
   email: String,
   prefect: String,
-  isActive: Boolean,
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("mentors", mentorSchema);
