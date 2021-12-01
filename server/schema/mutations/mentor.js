@@ -3,6 +3,7 @@ const {
   GraphQLNonNull,
   GraphQLInt,
   GraphQLBoolean,
+  GraphQLID,
 } = require("graphql");
 
 // Mongoose Models
