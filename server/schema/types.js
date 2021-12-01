@@ -14,18 +14,11 @@ const CoordinatorType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    contact: { type: GraphQLInt },
     rollNumber: { type: GraphQLString },
-    year: { type: GraphQLInt },
+    contact: { type: GraphQLInt },
     email: { type: GraphQLString },
-    designation: { type: GraphQLString },
-    prefect: { type: GraphQLID },
-    prefectDetails: {
-      type: PrefectType,
-      resolve(parent, args) {
-        return Prefect.findById(parent.prefect);
-      },
-    },
+    year: { type: GraphQLInt },
+    isActive: { type: graphql.GraphQLBoolean },
   }),
 });
 
@@ -34,15 +27,15 @@ const PrefectType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
+    rollNumber: { type: GraphQLString },
     contact: { type: GraphQLInt },
     email: { type: GraphQLString },
     year: { type: GraphQLInt },
-    rollNumber: { type: GraphQLString },
-    coordinator: { type: GraphQLID },
-    coordinatorDetails: {
-      type: CoordinatorType,
+    isActive: { type: graphql.GraphQLBoolean },
+    mentors: {
+      type: new GraphQLList(MentorType),
       resolve(parent, args) {
-        return Coordinator.findById(parent.coordinator);
+        return Mentor.find({ prefect: parent.id });
       },
     },
   }),
@@ -56,8 +49,8 @@ const MentorType = new GraphQLObjectType({
     rollNumber: { type: GraphQLString },
     contact: { type: GraphQLInt },
     email: { type: GraphQLString },
-    prefect: { type: GraphQLID },
-    prefectDetails: {
+    isActive: { type: graphql.GraphQLBoolean },
+    prefect: {
       type: PrefectType,
       resolve(parent, args) {
         return Prefect.findById(parent.prefect);
@@ -80,6 +73,7 @@ const MenteeType = new GraphQLObjectType({
     rollNumber: { type: GraphQLString },
     contact: { type: GraphQLInt },
     email: { type: GraphQLString },
+    emoji: { type: GraphQLInt },
     mentor: {
       type: MentorType,
       resolve(parent, args) {
