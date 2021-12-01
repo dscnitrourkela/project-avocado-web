@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 const coordinatorSchema = new Schema({
   name: String,
-  rollNumber: String,
-  contact: Number,
-  email: String,
-  designation: String,
-  prefect: {
-    type: Schema.Types.ObjectId,
-    ref: "prefect",
+  rollNumber: {
+    type: String,
+    unique: true,
   },
+  contact: String,
+  email: String,
   year: Number,
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("coordinator", coordinatorSchema);
