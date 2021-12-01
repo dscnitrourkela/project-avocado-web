@@ -1,51 +1,82 @@
-const {
-  GraphQLString,
-  GraphQLObjectType,
-  GraphQLList,
-} = require('graphql');
-const Mentor = require('../models/mentor');
-const Mentee = require('../models/mentee');
-const Coordinator = require('../models/coordinator');
-const Prefect = require('../models/prefect');
+const { GraphQLString, GraphQLObjectType, GraphQLList } = require("graphql");
+
+// Mongoose Schemas
+const Mentor = require("../models/mentor");
+const Mentee = require("../models/mentee");
+const Coordinator = require("../models/coordinator");
+const Prefect = require("../models/prefect");
+
+// GraphQL Types
 const {
   CoordinatorType,
   PrefectType,
   MentorType,
   MenteeType,
-} = require('./types');
+} = require("./types");
 
 const query = new GraphQLObjectType({
-  name: 'RootQueryType',
+  name: "RootQueryType",
   fields: {
-    mentee: {
+    // Get Members by Rollnumbers
+    getMenteeByRollnumber: {
       type: MenteeType,
       args: { rollNumber: { type: GraphQLString } },
       resolve(parent, args) {
         return Mentee.findOne({ rollNumber: args.rollNumber });
       },
     },
-    mentor: {
+    getMentorByRollnumber: {
       type: MentorType,
       args: { rollNumber: { type: GraphQLString } },
       async resolve(parent, args) {
         return Mentor.findOne({ rollNumber: args.rollNumber });
       },
     },
-    prefects: {
+    getPrefectByRollnumber: {
       type: new GraphQLList(PrefectType),
-      args: {},
+      args: { rollNumber: { type: GraphQLString } },
       resolve(parent, args) {
+        return Prefect.find({ rollNumber: args.rollNumber });
+      },
+    },
+    getCoordinatorByRollnumber: {
+      type: new GraphQLList(CoordinatorType),
+      args: { rollNumber: { type: GraphQLString } },
+      resolve(parent, args) {
+        return Coordinator.find({ rollNumber: args.rollNumber });
+      },
+    },
+
+    // Get all members
+    getMentees: {
+      type: new GraphQLList(MenteeType),
+      args: {},
+      async resolve() {
+        return Mentee.find({});
+      },
+    },
+    getMentors: {
+      type: new GraphQLList(MenteeType),
+      args: {},
+      async resolve() {
+        return Mentor.find({});
+      },
+    },
+    getPrefects: {
+      type: new GraphQLList(MenteeType),
+      args: {},
+      async resolve() {
         return Prefect.find({});
       },
     },
-    coordinators: {
-      type: new GraphQLList(CoordinatorType),
+    getCoordinators: {
+      type: new GraphQLList(MenteeType),
       args: {},
-      resolve(parent, args) {
+      async resolve() {
         return Coordinator.find({});
       },
     },
   },
 });
 
-module.exports =  query;
+module.exports = query;
