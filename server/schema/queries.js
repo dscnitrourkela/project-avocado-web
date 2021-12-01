@@ -22,28 +22,31 @@ const query = new GraphQLObjectType({
       type: MenteeType,
       args: { rollNumber: { type: GraphQLString } },
       resolve(parent, args) {
-        return Mentee.findOne({ rollNumber: args.rollNumber });
+        return Mentee.findOne({ rollNumber: args.rollNumber, isActive: true });
       },
     },
     getMentorByRollnumber: {
       type: MentorType,
       args: { rollNumber: { type: GraphQLString } },
       async resolve(parent, args) {
-        return Mentor.findOne({ rollNumber: args.rollNumber });
+        return Mentor.findOne({ rollNumber: args.rollNumber, isActive: true });
       },
     },
     getPrefectByRollnumber: {
       type: new GraphQLList(PrefectType),
       args: { rollNumber: { type: GraphQLString } },
       resolve(parent, args) {
-        return Prefect.find({ rollNumber: args.rollNumber });
+        return Prefect.find({ rollNumber: args.rollNumber, isActive: true });
       },
     },
     getCoordinatorByRollnumber: {
       type: new GraphQLList(CoordinatorType),
       args: { rollNumber: { type: GraphQLString } },
       resolve(parent, args) {
-        return Coordinator.find({ rollNumber: args.rollNumber });
+        return Coordinator.find({
+          rollNumber: args.rollNumber,
+          isActive: true,
+        });
       },
     },
 
@@ -52,28 +55,28 @@ const query = new GraphQLObjectType({
       type: new GraphQLList(MenteeType),
       args: {},
       async resolve() {
-        return Mentee.find({});
+        return Mentee.find({ isActive: true });
       },
     },
     getMentors: {
       type: new GraphQLList(MenteeType),
       args: {},
       async resolve() {
-        return Mentor.find({});
+        return Mentor.find({ isActive: true });
       },
     },
     getPrefects: {
       type: new GraphQLList(MenteeType),
       args: {},
       async resolve() {
-        return Prefect.find({});
+        return Prefect.find({ isActive: true });
       },
     },
     getCoordinators: {
       type: new GraphQLList(MenteeType),
       args: {},
       async resolve() {
-        return Coordinator.find({});
+        return Coordinator.find({ isActive: true });
       },
     },
   },

@@ -3,6 +3,7 @@ const {
   GraphQLNonNull,
   GraphQLInt,
   GraphQLBoolean,
+  GraphQLID,
 } = require("graphql");
 
 // Mongoose Models
@@ -22,12 +23,6 @@ const addPrefect = {
   },
   async resolve(parent, { name, contact, email, coordinator, rollNumber }) {
     try {
-      const checkPrefect = await Prefect.exists({ rollNumber });
-
-      if (checkPrefect) {
-        throw new Error("Prefect is already exists!");
-      }
-
       const prefect = new Prefect({
         name,
         contact,
@@ -83,10 +78,10 @@ const editPrefect = {
 const removePrefect = {
   type: PrefectType,
   args: {
-    rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLID) },
   },
-  async resolve(parent, { rollNumber }) {
-    await Prefect.findOneAndDelete({ rollNumber }, (error, docs) => {
+  async resolve(parent, { id }) {
+    await Prefect.findByIdAndDelete(id, (error, docs) => {
       if (error) {
         console.log(error);
       }

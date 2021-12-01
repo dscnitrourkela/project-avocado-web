@@ -22,12 +22,6 @@ const addMentor = {
   },
   async resolve(parent, { name, rollNumber, contact, email, prefect }) {
     try {
-      const checkMentor = await Mentor.exists({ rollNumber });
-
-      if (checkMentor) {
-        throw new Error("Mentor is already exists!");
-      }
-
       const mentor = new Mentor({
         name,
         rollNumber,
@@ -86,10 +80,10 @@ const editMentor = {
 const removeMentor = {
   type: MentorType,
   args: {
-    rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLID) },
   },
-  async resolve(parent, { rollNumber }) {
-    await Mentor.findOneAndDelete({ rollNumber }, (error, docs) => {
+  async resolve(parent, { id }) {
+    await Mentor.findByIdAndDelete(id, (error, docs) => {
       if (error) {
         console.log(error);
       }

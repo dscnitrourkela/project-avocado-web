@@ -23,12 +23,6 @@ const addMentee = {
   },
   async resolve(parent, { name, rollNumber, mentor, contact, email }) {
     try {
-      const checkMentee = await Mentee.exists({ rollNumber });
-
-      if (checkMentee) {
-        throw new Error("Mentee already exists!");
-      }
-
       const mentee = new Mentee({
         name,
         rollNumber,
@@ -85,19 +79,16 @@ const editMentee = {
 const removeMentee = {
   type: MenteeType,
   args: {
-    rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLID) },
   },
-  async resolve(parent, { rollNumber }) {
-    try {
-      await Mentee.findOneAndDelete({ rollNumber }, (error, docs) => {
-        if (error) {
-          console.log(error);
-        }
-        return docs;
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  async resolve(parent, { id }) {
+    await Mentee.findByIdAndDelete(id, (error, docs) => {
+      if (error) {
+        console.log(error);
+      }
+
+      return docs;
+    });
   },
 };
 

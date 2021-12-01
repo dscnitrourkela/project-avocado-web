@@ -22,12 +22,6 @@ const addCoordinator = {
   },
   async resolve(parent, { name, contact, email, rollNumber, year }) {
     try {
-      const checkCoordinator = await Coordinator.exists({ rollNumber });
-
-      if (checkCoordinator) {
-        throw new Error("Coordinator is already exists!");
-      }
-
       const coordinator = new Coordinator({
         name,
         contact,
@@ -83,10 +77,10 @@ const editCoordinator = {
 const removeCoordinator = {
   type: CoordinatorType,
   args: {
-    rollNumber: { type: new GraphQLNonNull(GraphQLString) },
+    id: { type: new GraphQLNonNull(GraphQLID) },
   },
-  async resolve(parent, { rollNumber }) {
-    await Coordinator.findOneAndDelete({ rollNumber }, (error, docs) => {
+  async resolve(parent, { id }) {
+    await Coordinator.findByIdAndDelete(id, (error, docs) => {
       if (error) {
         console.log(error);
       }

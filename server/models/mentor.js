@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const mentorSchema = new Schema({
   name: String,
-  rollNumber: String,
+  rollNumber: {
+    type: String,
+    unique: true,
+  },
   contact: String,
   email: String,
   prefect: String,
