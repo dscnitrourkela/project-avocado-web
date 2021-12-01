@@ -1,9 +1,11 @@
-const express = require('express');
-const graphqlHTTP = require('express-graphql');
-const schema = require('./schema/schema');
-const mongoose = require('mongoose');
+// Libraries
+const express = require("express");
+const graphqlHTTP = require("express-graphql");
+const mongoose = require("mongoose");
+require("dotenv").config();
 
-require('dotenv').config();
+// Modules Import
+const schema = require("./schema/schema");
 
 const app = express();
 
@@ -11,24 +13,22 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 //connect to mongodb database
-
 mongoose.connect(process.env.mongourl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 //confirm connection to database
-mongoose.connection.once('open', () => {
-  console.log('Connected to ics database');
+mongoose.connection.once("open", () => {
+  console.log("Connected to ics database");
 });
 
-const Mentor = require('./models/mentor');
-
+// Middlewares
 app.use(express.json());
 
 //graphql endpoint
 app.use(
-  '/graphql',
+  "/graphql",
   graphqlHTTP({
     schema: schema,
     graphiql: true,

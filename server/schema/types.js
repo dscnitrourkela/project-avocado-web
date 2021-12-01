@@ -1,4 +1,6 @@
 const graphql = require("graphql");
+
+// Mongoose Models
 const Mentor = require("../models/mentor");
 const Mentee = require("../models/mentee");
 const Coordinator = require("../models/coordinator");
