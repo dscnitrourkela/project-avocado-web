@@ -1,14 +1,18 @@
 const { GraphQLObjectType } = require("graphql");
 
 // Mutations
-import { addMentee, editMentee, removeMentee } from "./mutations/mentee";
-import { addMentor, editMentor, removeMentor } from "./mutations/mentor";
-import { addPrefect, editPrefect, removePrefect } from "./mutations/prefect";
-import {
+const { addMentee, editMentee, removeMentee } = require("./mutations/mentee");
+const { addMentor, editMentor, removeMentor } = require("./mutations/mentor");
+const {
+  addPrefect,
+  editPrefect,
+  removePrefect,
+} = require("./mutations/prefect");
+const {
   addCoordinator,
   editCoordinator,
   removeCoordinator,
-} from "./mutations/coordinator";
+} = require("./mutations/coordinator");
 
 const mutation = new GraphQLObjectType({
   name: "Mutations",

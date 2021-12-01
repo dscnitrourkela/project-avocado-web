@@ -3,20 +3,21 @@ const {
   GraphQLID,
   GraphQLNonNull,
   GraphQLInt,
+  GraphQLBoolean,
 } = require("graphql");
 
 // Mongoose Models
-const Mentee = require("../models/mentee");
+const Mentee = require("../../models/mentee");
 
 // GraphQL Types
-const { MenteeType } = require("./types");
+const { MenteeType } = require("../types");
 
 const addMentee = {
   type: MenteeType,
   args: {
     name: { type: new GraphQLNonNull(GraphQLString) },
     rollNumber: { type: new GraphQLNonNull(GraphQLString) },
-    contact: { type: new GraphQLNonNull(GraphQLInt) },
+    contact: { type: new GraphQLNonNull(GraphQLString) },
     email: { type: new GraphQLNonNull(GraphQLString) },
     mentor: { type: new GraphQLNonNull(GraphQLID) },
   },
@@ -49,7 +50,7 @@ const editMentee = {
     name: { type: GraphQLString },
     rollNumber: { type: new GraphQLNonNull(GraphQLString) },
     mentor: { type: GraphQLString },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     email: { type: GraphQLString },
     emoji: { type: GraphQLInt },
   },
@@ -66,6 +67,11 @@ const editMentee = {
             mentor,
             emoji,
           },
+        },
+        {
+          omitUndefined: true,
+          new: true,
+          runValidators: true,
         }
       );
 

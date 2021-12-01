@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const menteeSchema = new Schema({
   name: String,
   rollNumber: String,
-  contact: Number,
+  contact: String,
   email: String,
   mentor: String,
   emoji: {

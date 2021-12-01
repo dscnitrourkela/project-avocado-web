@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const coordinatorSchema = new Schema({
   name: String,
   rollNumber: String,
-  contact: Number,
+  contact: String,
   email: String,
   year: Number,
   isActive: Boolean,

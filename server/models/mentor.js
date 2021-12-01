@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const mentorSchema = new Schema({
   name: String,
   rollNumber: String,
-  contact: Number,
+  contact: String,
   email: String,
   prefect: String,
   isActive: {

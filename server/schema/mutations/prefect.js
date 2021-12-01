@@ -1,17 +1,22 @@
-const { GraphQLString, GraphQLNonNull, GraphQLInt } = require("graphql");
+const {
+  GraphQLString,
+  GraphQLNonNull,
+  GraphQLInt,
+  GraphQLBoolean,
+} = require("graphql");
 
 // Mongoose Models
-const Prefect = require("../models/prefect");
+const Prefect = require("../../models/prefect");
 
 // GraphQL Types
-const { PrefectType } = require("./types");
+const { PrefectType } = require("../types");
 
 const addPrefect = {
   type: PrefectType,
   args: {
     name: { type: new GraphQLNonNull(GraphQLString) },
     rollNumber: { type: new GraphQLNonNull(GraphQLString) },
-    contact: { type: new GraphQLNonNull(GraphQLInt) },
+    contact: { type: new GraphQLNonNull(GraphQLString) },
     email: { type: new GraphQLNonNull(GraphQLString) },
     year: { type: GraphQLInt },
   },
@@ -42,7 +47,7 @@ const editPrefect = {
   type: PrefectType,
   args: {
     name: { type: GraphQLString },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     email: { type: GraphQLString },
     year: { type: GraphQLInt },
     isActive: { type: GraphQLBoolean },
@@ -60,6 +65,11 @@ const editPrefect = {
             year,
             isActive,
           },
+        },
+        {
+          omitUndefined: true,
+          new: true,
+          runValidators: true,
         }
       );
 

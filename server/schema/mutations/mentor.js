@@ -6,17 +6,17 @@ const {
 } = require("graphql");
 
 // Mongoose Models
-const Mentor = require("../models/mentor");
+const Mentor = require("../../models/mentor");
 
 // GraphQL Types
-const { MentorType } = require("./types");
+const { MentorType } = require("../types");
 
 const addMentor = {
   type: MentorType,
   args: {
     name: { type: new GraphQLNonNull(GraphQLString) },
     rollNumber: { type: new GraphQLNonNull(GraphQLString) },
-    contact: { type: new GraphQLNonNull(GraphQLInt) },
+    contact: { type: new GraphQLNonNull(GraphQLString) },
     email: { type: new GraphQLNonNull(GraphQLString) },
     prefect: { type: new GraphQLNonNull(GraphQLString) },
   },
@@ -48,7 +48,7 @@ const editMentor = {
   args: {
     name: { type: GraphQLString },
     rollNumber: { type: new GraphQLNonNull(GraphQLString) },
-    contact: { type: GraphQLInt },
+    contact: { type: GraphQLString },
     email: { type: GraphQLString },
     prefect: { type: GraphQLString },
     isActive: { type: GraphQLBoolean },
@@ -68,6 +68,11 @@ const editMentor = {
             prefect,
             isActive,
           },
+        },
+        {
+          omitUndefined: true,
+          new: true,
+          runValidators: true,
         }
       );
 
