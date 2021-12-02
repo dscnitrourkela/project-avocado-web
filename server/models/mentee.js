@@ -14,6 +14,10 @@ const menteeSchema = new Schema({
     type: Number,
     default: -1,
   },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("mentees", menteeSchema);
