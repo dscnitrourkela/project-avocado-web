@@ -11,7 +11,7 @@ const app = express();
 
 //Get port
 const port = process.env.PORT || 4000;
-
+mongoose.set("useCreateIndex", true);
 //connect to mongodb database
 mongoose.connect(process.env.mongourl, {
   useNewUrlParser: true,

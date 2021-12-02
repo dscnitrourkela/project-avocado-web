@@ -5,6 +5,7 @@ const Mentor = require("../models/mentor");
 const Mentee = require("../models/mentee");
 const Coordinator = require("../models/coordinator");
 const Prefect = require("../models/prefect");
+const Faculty = require("../models/faculty");
 
 // GraphQL Types
 const {
@@ -12,6 +13,7 @@ const {
   PrefectType,
   MentorType,
   MenteeType,
+  FacultyType,
 } = require("./types");
 
 const query = new GraphQLObjectType({
@@ -59,24 +61,31 @@ const query = new GraphQLObjectType({
       },
     },
     getMentors: {
-      type: new GraphQLList(MenteeType),
+      type: new GraphQLList(MentorType),
       args: {},
       async resolve() {
         return Mentor.find({ isActive: true });
       },
     },
     getPrefects: {
-      type: new GraphQLList(MenteeType),
+      type: new GraphQLList(PrefectType),
       args: {},
       async resolve() {
         return Prefect.find({ isActive: true });
       },
     },
     getCoordinators: {
-      type: new GraphQLList(MenteeType),
+      type: new GraphQLList(CoordinatorType),
       args: {},
       async resolve() {
         return Coordinator.find({ isActive: true });
+      },
+    },
+    getFaculties: {
+      type: new GraphQLList(FacultyType),
+      args: {},
+      async resolve() {
+        return Faculty.find({ isActive: true });
       },
     },
   },

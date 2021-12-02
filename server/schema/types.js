@@ -3,11 +3,27 @@ const graphql = require("graphql");
 // Mongoose Models
 const Mentor = require("../models/mentor");
 const Mentee = require("../models/mentee");
-const Coordinator = require("../models/coordinator");
 const Prefect = require("../models/prefect");
 
-const { GraphQLString, GraphQLObjectType, GraphQLID, GraphQLList, GraphQLInt } =
-  graphql;
+const {
+  GraphQLString,
+  GraphQLObjectType,
+  GraphQLID,
+  GraphQLList,
+  GraphQLInt,
+  GraphQLBoolean,
+} = graphql;
+
+const FacultyType = new GraphQLObjectType({
+  name: "Faculty",
+  fields: () => ({
+    id: { type: GraphQLID },
+    name: { type: GraphQLString },
+    designation: { type: GraphQLString },
+    year: { type: GraphQLInt },
+    isActive: { type: GraphQLBoolean },
+  }),
+});
 
 const CoordinatorType = new GraphQLObjectType({
   name: "Coordinator",
@@ -18,7 +34,7 @@ const CoordinatorType = new GraphQLObjectType({
     contact: { type: GraphQLString },
     email: { type: GraphQLString },
     year: { type: GraphQLInt },
-    isActive: { type: graphql.GraphQLBoolean },
+    isActive: { type: GraphQLBoolean },
   }),
 });
 
@@ -31,7 +47,7 @@ const PrefectType = new GraphQLObjectType({
     contact: { type: GraphQLString },
     email: { type: GraphQLString },
     year: { type: GraphQLInt },
-    isActive: { type: graphql.GraphQLBoolean },
+    isActive: { type: GraphQLBoolean },
     mentors: {
       type: new GraphQLList(MentorType),
       resolve(parent, args) {
@@ -49,7 +65,7 @@ const MentorType = new GraphQLObjectType({
     rollNumber: { type: GraphQLString },
     contact: { type: GraphQLString },
     email: { type: GraphQLString },
-    isActive: { type: graphql.GraphQLBoolean },
+    isActive: { type: GraphQLBoolean },
     prefect: {
       type: PrefectType,
       resolve(parent, args) {
@@ -88,4 +104,5 @@ module.exports = {
   PrefectType,
   MentorType,
   MenteeType,
+  FacultyType,
 };
