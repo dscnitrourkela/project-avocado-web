@@ -51,7 +51,7 @@ const PrefectType = new GraphQLObjectType({
     mentors: {
       type: new GraphQLList(MentorType),
       resolve(parent, args) {
-        return Mentor.find({ prefect: parent.id });
+        return Mentor.find({ prefect: parent.rollNumber });
       },
     },
   }),
@@ -69,13 +69,13 @@ const MentorType = new GraphQLObjectType({
     prefect: {
       type: PrefectType,
       resolve(parent, args) {
-        return Prefect.findById(parent.prefect);
+        return Prefect.findOne({ rollNumber: parent.prefect });
       },
     },
     mentees: {
       type: new GraphQLList(MenteeType),
       resolve(parent, args) {
-        return Mentee.find({ mentor: parent.id });
+        return Mentee.find({ mentor: parent.rollNumber });
       },
     },
   }),
@@ -93,7 +93,7 @@ const MenteeType = new GraphQLObjectType({
     mentor: {
       type: MentorType,
       resolve(parent, args) {
-        return Mentor.findById(parent.mentor);
+        return Mentor.findOne({ rollNumber: parent.mentor });
       },
     },
   }),
